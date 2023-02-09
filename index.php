@@ -13,6 +13,7 @@ $movies = [
 
 ];
 
+$yearList;
 
 ?>
 
@@ -22,15 +23,39 @@ $movies = [
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Devoir 2</title>
 </head>
 <body>
     <div class="container">
-        <header>
+        <header class="header">
             <h1>IMDb Movies</h1>
         </header>
         <main>
-            
+            <section class="main-section">
+                <h2>Rechercher un film par année</h2>
+                <ul>
+                    <?php foreach ($movies as $element) {
+                        foreach ($element as $value) {
+                            $yearList[] = $element['year'];
+                            sort($yearList);}
+                    }?>
+                    <?php foreach (array_unique($yearList) as $year) { ?>
+                    <li><a href="index.php?year=<?php echo $year?>"><?php echo $year?></a></li>
+                    <?php }?>
+                </ul>
+                <?php 
+                    if(isset($_GET) and $_GET!=null) {
+                        foreach($movies as $element) {
+                            if($element['year']===$_GET['year']) {  
+                ?>
+                <div class="movie-info">
+                    <h3><?php echo $element['name']?></h3>
+                    <p><?php echo $element['description']?></p>
+                </div>
+                <?php } } }?>
+            </section>
         </main>
     </div>
 </body>
